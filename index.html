@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tabs</title>
+  </head>
+  <body>
+    <style>
+      .tabs {
+        overflow: hidden;
+      }
+
+      .tab-head {
+        display: flex;
+        gap: 30px;
+        overflow: auto;
+      }
+      .tab-head__item {
+        padding: 1rem;
+        font-size: 1.6rem;
+        border-bottom: 1px solid transparent;
+        cursor: pointer;
+      }
+
+      .tab-head__item:hover,
+      .tab-head__item.active {
+        border-bottom: 1px solid blue;
+      }
+
+      .tab-content {
+        position: relative;
+      }
+      .tab-content__item {
+        position: absolute;
+        left: 0;
+        top: 0;
+
+        z-index: -1;
+        opacity: 0;
+        transform: translateX(100px);
+      }
+      .tab-content__item.active {
+        transition: all 250ms;
+        opacity: 1;
+        transform: translateX(0);
+        position: static;
+        z-index: 1;
+      }
+    </style>
+
+    <div class="max">
+      <div class="tabs">
+        <div class="tab-head">
+          <div class="tab-head__item active">1</div>
+          <div class="tab-head__item">2</div>
+          <div class="tab-head__item">3</div>
+          <div class="tab-head__item">4</div>
+        </div>
+        <div class="tab-content">
+          <div class="tab-content__item active">content1</div>
+          <div class="tab-content__item">content2</div>
+          <div class="tab-content__item">content3</div>
+          <div class="tab-content__item">content4</div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        const tabs = document.querySelectorAll(".tab-head__item");
+        const contents = document.querySelectorAll(".tab-content__item");
+
+        tabs.forEach((tab, index) => {
+          tab.onclick = () => {
+            changeTab(index);
+          };
+        });
+
+        function changeTab(index) {
+          setActiveClass(tabs, index);
+          setActiveClass(contents, index);
+        }
+
+        function setActiveClass(arr, index) {
+          for (let el of arr) {
+            el.classList.remove("active");
+          }
+          arr[index].classList.add("active");
+        }
+      })();
+    </script>
+  </body>
+</html>
